@@ -5,11 +5,13 @@ var http = require('http'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
     cors = require('cors'),
+    dotenv = require('dotenv'),
     passport = require('passport'),
     errorhandler = require('errorhandler'),
     mongoose = require('mongoose');
 
 var isProduction = process.env.NODE_ENV === 'production';
+dotenv.config();
 
 // Create global app object
 var app = express();
@@ -30,7 +32,7 @@ if (!isProduction) {
   app.use(errorhandler());
 }
 
-mongoose.connect('mongodb+srv://tupaca:h8YZBOQWkHCh1DzD@cluster0.mejqr.mongodb.net/recruiting?retryWrites=true&w=majority');
+mongoose.connect(process.env.MONGO_URL);
 mongoose.set('debug', true);
 
 require('./models/User');
